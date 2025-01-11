@@ -1,11 +1,30 @@
 {
   "version": 3,
   "targets": {
-    "net9.0": {}
+    "net9.0": {
+      "Products/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v9.0",
+        "compile": {
+          "bin/placeholder/Products.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Products.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "Products/1.0.0": {
+      "type": "project",
+      "path": "../ProductsAgent/Products/Products.csproj",
+      "msbuildProject": "../ProductsAgent/Products/Products.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net9.0": []
+    "net9.0": [
+      "Products >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\brett\\.nuget\\packages\\": {},
@@ -38,7 +57,11 @@
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\dev\\TestCursor\\ProductsAgent\\Products\\Products.csproj": {
+              "projectPath": "C:\\dev\\TestCursor\\ProductsAgent\\Products\\Products.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

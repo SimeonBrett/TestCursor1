@@ -24,24 +24,28 @@ build_property.EnableCodeStyleSeverity =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBcHAucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/dev/TestCursor/TestCursor/Components/Pages/Counter.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDb3VudGVyLnJhem9y
+[C:/dev/TestCursor/TestCursor/Components/Counter.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xDb3VudGVyLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/dev/TestCursor/TestCursor/Components/Pages/Error.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xFcnJvci5yYXpvcg==
+[C:/dev/TestCursor/TestCursor/Components/Error.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xFcnJvci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/dev/TestCursor/TestCursor/Components/Pages/Home.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xIb21lLnJhem9y
+[C:/dev/TestCursor/TestCursor/Components/Home.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xIb21lLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/dev/TestCursor/TestCursor/Components/Pages/Weather.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xXZWF0aGVyLnJhem9y
+[C:/dev/TestCursor/TestCursor/Components/Playground.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQbGF5Z3JvdW5kLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/dev/TestCursor/TestCursor/Components/Routes.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xSb3V0ZXMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/dev/TestCursor/TestCursor/Components/Weather.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xXZWF0aGVyLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/dev/TestCursor/TestCursor/Components/_Imports.razor]
@@ -56,6 +60,6 @@ build_metadata.AdditionalFiles.CssScope = b-olkh7cd927
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTmF2TWVudS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = b-ds99zcpr28
 
-[C:/dev/TestCursor/TestCursor/Components/Pages/CodeFile.cs_Host.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDb2RlRmlsZS5jc19Ib3N0LmNzaHRtbA==
+[C:/dev/TestCursor/TestCursor/Pages/_Host.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX0hvc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

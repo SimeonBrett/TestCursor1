@@ -82,3 +82,8 @@ C:\dev\TestCursor\TestCursor\obj\Debug\net9.0\compressed\d5skwlcdsc-gjvvfim4bn.g
 C:\dev\TestCursor\TestCursor\obj\Debug\net9.0\TestCursor.RazorAssemblyInfo.cache
 C:\dev\TestCursor\TestCursor\obj\Debug\net9.0\TestCursor.RazorAssemblyInfo.cs
 C:\dev\TestCursor\TestCursor\obj\Debug\net9.0\compressed\l6pjlf382t-v61zq7ab69.gz
+C:\dev\TestCursor\TestCursor\obj\Debug\net9.0\TestCursor.sourcelink.json
+C:\dev\TestCursor\TestCursor\bin\Debug\net9.0\Products.dll
+C:\dev\TestCursor\TestCursor\bin\Debug\net9.0\Products.pdb
+C:\dev\TestCursor\TestCursor\obj\Debug\net9.0\TestCursor.csproj.AssemblyReference.cache
+C:\dev\TestCursor\TestCursor\obj\Debug\net9.0\TestCursor.csproj.Up2Date

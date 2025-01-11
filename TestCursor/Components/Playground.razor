@@ -1,0 +1,27 @@
+﻿@page "/scrollabletextbox"
+@using Products
+@rendermode InteractiveServer
+
+<h3>Playground</h3>
+
+<PageTitle>Scrollable TextBox</PageTitle>
+
+<h1>Scrollable TextBox</h1>
+
+<textarea class="form-control" style="height: 200px;" readonly>@textBoxContent</textarea>
+
+<button class="btn btn-primary" @onclick="GetAllProducts">Get All Products</button>
+
+@code {
+    private string textBoxContent = "No Data Yet";
+
+    [Inject]
+    private IProcessProducts ProcessProducts { get; set; }
+
+    private async Task GetAllProducts()
+    {
+        textBoxContent = "Fetching all products...";
+        var products =  ProcessProducts.GetAllProducts();
+        textBoxContent = string.Join("\n", products);
+    }
+}
