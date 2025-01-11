@@ -1,0 +1,28 @@
+@page "/"
+@inject ITaskService TaskService
+
+<PageTitle>Home</PageTitle>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 text-center">
+            <button class="btn btn-primary btn-lg mt-4" @onclick="ExecuteTask">
+                <i class="oi oi-play-circle me-2"></i> Execute
+            </button>
+            <button class="btn btn-secondary" @onclick="CloseApplication">Close</button>
+        </div>
+    </div>
+</div>
+
+@code {
+    private async Task ExecuteTask()
+    {
+        Console.WriteLine("Execute button clicked!");
+    }
+
+    private void CloseApplication()
+    {
+        // In a real application, you might want to handle cleanup here
+        Environment.Exit(0);
+    }
+} 
