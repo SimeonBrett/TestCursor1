@@ -47,7 +47,9 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 builder.Services.AddRazorPages();
 // Register the IProcessProducts service
-builder.Services.AddScoped<IProcessProducts, TestProducts>();
+//builder.Services.AddScoped<IProcessProducts, ProcessProductsForSpotify>();
+builder.Services.AddScoped<IProcessProducts>(sp => new ProcessProductsForShopify("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"));
+
 
 var app = builder.Build();
 

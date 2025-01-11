@@ -87,3 +87,4 @@ C:\dev\TestCursor\TestCursor\bin\Debug\net9.0\Products.dll
 C:\dev\TestCursor\TestCursor\bin\Debug\net9.0\Products.pdb
 C:\dev\TestCursor\TestCursor\obj\Debug\net9.0\TestCursor.csproj.AssemblyReference.cache
 C:\dev\TestCursor\TestCursor\obj\Debug\net9.0\TestCursor.csproj.Up2Date
+C:\dev\TestCursor\TestCursor\bin\Debug\net9.0\RestSharp.dll

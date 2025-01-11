@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TestCursor")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+06f8d07c5b6eb1501a6cc94748648ae25ef4602e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8126e993cb5ffa772ca7fb45adbbfb65160d3be2")]
 [assembly: System.Reflection.AssemblyProductAttribute("TestCursor")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TestCursor")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

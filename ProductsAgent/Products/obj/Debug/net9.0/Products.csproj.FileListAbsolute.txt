@@ -10,3 +10,4 @@ C:\dev\TestCursor\ProductsAgent\Products\obj\Debug\net9.0\Products.dll
 C:\dev\TestCursor\ProductsAgent\Products\obj\Debug\net9.0\refint\Products.dll
 C:\dev\TestCursor\ProductsAgent\Products\obj\Debug\net9.0\Products.pdb
 C:\dev\TestCursor\ProductsAgent\Products\obj\Debug\net9.0\ref\Products.dll
+C:\dev\TestCursor\ProductsAgent\Products\obj\Debug\net9.0\Products.csproj.AssemblyReference.cache
