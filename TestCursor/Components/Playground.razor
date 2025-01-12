@@ -1,4 +1,5 @@
 ﻿@page "/scrollabletextbox"
+@using AiAgent
 @using Products
 @rendermode InteractiveServer
 
@@ -9,19 +10,32 @@
 <h1>Scrollable TextBox</h1>
 
 <textarea class="form-control" style="height: 200px;" readonly>@textBoxContent</textarea>
+<textarea class="form-control" style="height: 200px;" readonly>@aiResponseContent</textarea>
 
 <button class="btn btn-primary" @onclick="GetAllProducts">Get All Products</button>
+<button class="btn btn-secondary" @onclick="SendToAI">Send to AI</button>
 
 @code {
     private string textBoxContent = "No Data Yet";
+    private string aiResponseContent = "No AI Response Yet";
 
     [Inject]
     private IProcessProducts ProcessProducts { get; set; }
 
+    [Inject]
+    private IAiAgent AiAgent { get; set; }
+
     private async Task GetAllProducts()
     {
         textBoxContent = "Fetching all products...";
-        var products =  ProcessProducts.GetAllProducts();
+        var products = ProcessProducts.GetAllProducts();
         textBoxContent = string.Join("\n", products);
+    }
+
+    private async Task SendToAI()
+    {
+        aiResponseContent = "Sending data to AI...";
+        var response =  AiAgent.QueryAgent(textBoxContent);
+        aiResponseContent = $"AI Response: {response}";
     }
 }

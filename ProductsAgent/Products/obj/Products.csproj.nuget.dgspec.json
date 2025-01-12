@@ -25,8 +25,7 @@
           "net9.0"
         ],
         "sources": {
-          "https://api.nuget.org/v3/index.json": {},
-          "https://dev.azure.com/jitb/_packaging/JackInTheBox-NServiceBus/nuget/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net9.0": {

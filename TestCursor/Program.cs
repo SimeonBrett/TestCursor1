@@ -36,7 +36,7 @@
 
 //app.Run();
 
-
+using AiAgent;
 using Products;
 using TestCursor.Components;
 
@@ -49,7 +49,8 @@ builder.Services.AddRazorPages();
 // Register the IProcessProducts service
 //builder.Services.AddScoped<IProcessProducts, ProcessProductsForSpotify>();
 builder.Services.AddScoped<IProcessProducts>(sp => new ProcessProductsForShopify("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"));
-
+//builder.Services.AddScoped<IAiAgent, TestAiAgent>();
+builder.Services.AddScoped<IAiAgent>(sp => new OpenAiClient("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"));
 
 var app = builder.Build();
 

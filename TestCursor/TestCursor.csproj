@@ -4,6 +4,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>8616bfa5-1937-4646-8245-c398b5fb28d8</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,6 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AiAgents\AiAgent.csproj" />
+    <ProjectReference Include="..\AiAgent\AiAgent\AiAgent.csproj" />
     <ProjectReference Include="..\ProductsAgent\Products\Products.csproj" />
   </ItemGroup>
 

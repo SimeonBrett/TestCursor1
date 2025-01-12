@@ -15,6 +15,19 @@
           }
         }
       },
+      "AiAgent/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v9.0",
+        "dependencies": {
+          "RestSharp": "112.1.0"
+        },
+        "compile": {
+          "bin/placeholder/AiAgent.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AiAgent.dll": {}
+        }
+      },
       "Products/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
@@ -56,6 +69,11 @@
         "restsharp.png"
       ]
     },
+    "AiAgent/1.0.0": {
+      "type": "project",
+      "path": "../AiAgents/AiAgent.csproj",
+      "msbuildProject": "../AiAgents/AiAgent.csproj"
+    },
     "Products/1.0.0": {
       "type": "project",
       "path": "../ProductsAgent/Products/Products.csproj",
@@ -64,6 +82,7 @@
   },
   "projectFileDependencyGroups": {
     "net9.0": [
+      "AiAgent >= 1.0.0",
       "Products >= 1.0.0"
     ]
   },
@@ -92,13 +111,18 @@
         "net9.0"
       ],
       "sources": {
-        "https://api.nuget.org/v3/index.json": {},
-        "https://dev.azure.com/jitb/_packaging/JackInTheBox-NServiceBus/nuget/v3/index.json": {}
+        "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
+            "C:\\dev\\TestCursor\\AiAgents\\AiAgent.csproj": {
+              "projectPath": "C:\\dev\\TestCursor\\AiAgents\\AiAgent.csproj"
+            },
+            "C:\\dev\\TestCursor\\AiAgent\\AiAgent\\AiAgent.csproj": {
+              "projectPath": "C:\\dev\\TestCursor\\AiAgent\\AiAgent\\AiAgent.csproj"
+            },
             "C:\\dev\\TestCursor\\ProductsAgent\\Products\\Products.csproj": {
               "projectPath": "C:\\dev\\TestCursor\\ProductsAgent\\Products\\Products.csproj"
             }
@@ -142,13 +166,5 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1900",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Error occurred while getting package vulnerability data: Unable to load the service index for source https://dev.azure.com/jitb/_packaging/JackInTheBox-NServiceBus/nuget/v3/index.json."
-    }
-  ]
+  }
 }

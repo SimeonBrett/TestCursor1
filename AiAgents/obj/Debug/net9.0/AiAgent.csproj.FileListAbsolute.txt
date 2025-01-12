@@ -1,0 +1,13 @@
+C:\dev\TestCursor\AiAgents\bin\Debug\net9.0\AiAgent.deps.json
+C:\dev\TestCursor\AiAgents\bin\Debug\net9.0\AiAgent.dll
+C:\dev\TestCursor\AiAgents\bin\Debug\net9.0\AiAgent.pdb
+C:\dev\TestCursor\AiAgents\obj\Debug\net9.0\AiAgent.csproj.AssemblyReference.cache
+C:\dev\TestCursor\AiAgents\obj\Debug\net9.0\AiAgent.GeneratedMSBuildEditorConfig.editorconfig
+C:\dev\TestCursor\AiAgents\obj\Debug\net9.0\AiAgent.AssemblyInfoInputs.cache
+C:\dev\TestCursor\AiAgents\obj\Debug\net9.0\AiAgent.AssemblyInfo.cs
+C:\dev\TestCursor\AiAgents\obj\Debug\net9.0\AiAgent.csproj.CoreCompileInputs.cache
+C:\dev\TestCursor\AiAgents\obj\Debug\net9.0\AiAgent.sourcelink.json
+C:\dev\TestCursor\AiAgents\obj\Debug\net9.0\AiAgent.dll
+C:\dev\TestCursor\AiAgents\obj\Debug\net9.0\refint\AiAgent.dll
+C:\dev\TestCursor\AiAgents\obj\Debug\net9.0\AiAgent.pdb
+C:\dev\TestCursor\AiAgents\obj\Debug\net9.0\ref\AiAgent.dll

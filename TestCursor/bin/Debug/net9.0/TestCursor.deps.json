@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v9.0": {
       "TestCursor/1.0.0": {
         "dependencies": {
+          "AiAgent": "1.0.0",
           "Products": "1.0.0"
         },
         "runtime": {
@@ -19,6 +20,17 @@
           "lib/net8.0/RestSharp.dll": {
             "assemblyVersion": "112.1.0.0",
             "fileVersion": "112.1.0.0"
+          }
+        }
+      },
+      "AiAgent/1.0.0": {
+        "dependencies": {
+          "RestSharp": "112.1.0"
+        },
+        "runtime": {
+          "AiAgent.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
           }
         }
       },
@@ -47,6 +59,11 @@
       "sha512": "sha512-bOUGNZqhhv/QeCXHTKEUil846yBjwWXpzPKjO67kFvaAOoF361z7jLY5BMnuZ6WD2WQRA750sNMcK7MSPCQ5Mg==",
       "path": "restsharp/112.1.0",
       "hashPath": "restsharp.112.1.0.nupkg.sha512"
+    },
+    "AiAgent/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     },
     "Products/1.0.0": {
       "type": "project",
