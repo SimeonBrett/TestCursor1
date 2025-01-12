@@ -1,2 +1,7 @@
-.vs/
-.vscode/
+**/.vs/
+**/.vscode/
+**/bin/
+**/obj/
+**/*.dll
+**/*.pdb
+**/*.cache

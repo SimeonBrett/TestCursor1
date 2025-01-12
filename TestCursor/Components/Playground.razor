@@ -2,15 +2,20 @@
 @using AiAgent
 @using Products
 @rendermode InteractiveServer
+@using Markdig
 
 <h3>Playground</h3>
 
 <PageTitle>Scrollable TextBox</PageTitle>
 
-<h1>Scrollable TextBox</h1>
+<h3>Products</h3>
 
-<textarea class="form-control" style="height: 200px;" readonly>@textBoxContent</textarea>
-<textarea class="form-control" style="height: 200px;" readonly>@aiResponseContent</textarea>
+<textarea class="form-control" style="height: 50px; margin-bottom: 20px;" readonly>@textBoxContent</textarea>
+
+<h3>Recommendations</h3>
+<div class="form-control" style="height: 800px; overflow-y: auto;">
+    @aiResponseHtml
+</div>
 
 <button class="btn btn-primary" @onclick="GetAllProducts">Get All Products</button>
 <button class="btn btn-secondary" @onclick="SendToAI">Send to AI</button>
@@ -18,6 +23,7 @@
 @code {
     private string textBoxContent = "No Data Yet";
     private string aiResponseContent = "No AI Response Yet";
+    private MarkupString aiResponseHtml;
 
     [Inject]
     private IProcessProducts ProcessProducts { get; set; }
@@ -35,7 +41,8 @@
     private async Task SendToAI()
     {
         aiResponseContent = "Sending data to AI...";
-        var response =  AiAgent.QueryAgent(textBoxContent);
-        aiResponseContent = $"AI Response: {response}";
+        var response = AiAgent.QueryAgent(textBoxContent);
+        aiResponseContent = response;
+        aiResponseHtml = new MarkupString(Markdown.ToHtml(aiResponseContent));
     }
 }

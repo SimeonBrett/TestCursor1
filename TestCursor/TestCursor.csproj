@@ -12,8 +12,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AiAgents\AiAgent.csproj" />
-    <ProjectReference Include="..\AiAgent\AiAgent\AiAgent.csproj" />
+    <PackageReference Include="Markdig" Version="0.40.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AiAgent\AiAgent.csproj" />
     <ProjectReference Include="..\ProductsAgent\Products\Products.csproj" />
   </ItemGroup>
 

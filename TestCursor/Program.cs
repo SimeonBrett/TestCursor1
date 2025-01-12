@@ -1,46 +1,13 @@
-//using Products;
-//using TestCursor.Components;
-
-//var builder = WebApplication.CreateBuilder(args);
-
-//// Add services to the container.
-//builder.Services.AddRazorComponents()
-//    .AddInteractiveServerComponents();
-//builder.Services.AddRazorPages();
-//// Register the IProcessProducts service
-//builder.Services.AddScoped<IProcessProducts, TestProducts>();
-
-
-//var app = builder.Build();
-
-//// Configure the HTTP request pipeline.
-//if (!app.Environment.IsDevelopment())
-//{
-//    app.UseExceptionHandler("/Error", createScopeForErrors: true);
-//    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-//    app.UseHsts();
-//}
-
-////added the following for DI injection
-//app.UseHttpsRedirection();
-//app.UseStaticFiles();
-//app.UseRouting();
-//app.MapBlazorHub();
-//app.MapFallbackToPage("/_Host");
-
-//app.UseAntiforgery();
-
-////app.MapStaticAssets();
-////app.MapRazorComponents<App>()
-////    .AddInteractiveServerRenderMode();
-
-//app.Run();
 
 using AiAgent;
 using Products;
 using TestCursor.Components;
 
+
 var builder = WebApplication.CreateBuilder(args);
+
+var openAiApiKey = builder.Configuration["OpenAiClient:ApiKey"];
+var shopifyApiToken = builder.Configuration["Shopify:AccessToken"];
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
@@ -48,9 +15,9 @@ builder.Services.AddRazorComponents()
 builder.Services.AddRazorPages();
 // Register the IProcessProducts service
 //builder.Services.AddScoped<IProcessProducts, ProcessProductsForSpotify>();
-builder.Services.AddScoped<IProcessProducts>(sp => new ProcessProductsForShopify("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"));
+builder.Services.AddScoped<IProcessProducts>(sp => new ProcessProductsForShopify(shopifyApiToken));
 //builder.Services.AddScoped<IAiAgent, TestAiAgent>();
-builder.Services.AddScoped<IAiAgent>(sp => new OpenAiClient("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"));
+builder.Services.AddScoped<IAiAgent>(sp => new OpenAiClient(openAiApiKey));
 
 var app = builder.Build();
 

@@ -2,6 +2,7 @@
 
 
 using RestSharp;
+using System.Text.Json;
 
 public class OpenAiRequest
 {
@@ -61,7 +62,7 @@ public class OpenAiClient : IAiAgent
 
             if (response.IsSuccessful)
             {
-                return response.Content ?? string.Empty;
+                return ExtractContent(response.Content ?? "{}");
 
             }
 
@@ -71,6 +72,24 @@ public class OpenAiClient : IAiAgent
         {
             throw new Exception($"Error making OpenAI API call: {ex.Message}", ex);
         }
+    }
+
+    public static string ExtractContent(string jsonResponse)
+    {
+        using JsonDocument document = JsonDocument.Parse(jsonResponse);
+        JsonElement root = document.RootElement;
+
+        JsonElement choices = root.GetProperty("choices");
+        if (choices.GetArrayLength() > 0)
+        {
+            JsonElement firstChoice = choices[0];
+            JsonElement message = firstChoice.GetProperty("message");
+            JsonElement content = message.GetProperty("content");
+
+            return content.GetString();
+        }
+
+        return string.Empty;
     }
 }
 
