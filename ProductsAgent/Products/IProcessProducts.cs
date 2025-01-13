@@ -2,11 +2,15 @@
 {
     public interface IProcessProducts
     {
+
+        ProductList ProductList { get; }
         string GetAllProducts();
     }
 
     public class TestProducts : IProcessProducts
     {
+        public ProductList ProductList { get; }
+
         public string GetAllProducts()
         {
             return

@@ -3,6 +3,7 @@
 @using Products
 @rendermode InteractiveServer
 @using Markdig
+@using ProductsAgent.Models
 
 <h3>Playground</h3>
 
@@ -10,18 +11,40 @@
 
 <h3>Products</h3>
 
-<textarea class="form-control" style="height: 50px; margin-bottom: 20px;" readonly>@textBoxContent</textarea>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in textBoxContent)
+        {
+            <tr>
+                <td>@product.Title</td>
+                <td>@(new MarkupString(Markdown.ToPlainText(product.BodyHtml)))</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<button class="btn btn-primary" @onclick="GetAllProducts">Get All Products</button>
+
+
+
 
 <h3>Recommendations</h3>
 <div class="form-control" style="height: 800px; overflow-y: auto;">
     @aiResponseHtml
 </div>
 
-<button class="btn btn-primary" @onclick="GetAllProducts">Get All Products</button>
+
 <button class="btn btn-secondary" @onclick="SendToAI">Send to AI</button>
 
 @code {
-    private string textBoxContent = "No Data Yet";
+    private List<Product> textBoxContent = new List<Product>();
     private string aiResponseContent = "No AI Response Yet";
     private MarkupString aiResponseHtml;
 
@@ -33,16 +56,22 @@
 
     private async Task GetAllProducts()
     {
-        textBoxContent = "Fetching all products...";
+        textBoxContent = new List<Product> { new Product { Title = "Fetching all products...", BodyHtml = "" } };
         var products = ProcessProducts.GetAllProducts();
-        textBoxContent = string.Join("\n", products);
+        textBoxContent = ProcessProducts.ProductList.Products.Select(p => new Product { Title = p.Title, BodyHtml = p.BodyHtml }).ToList();
     }
 
     private async Task SendToAI()
     {
         aiResponseContent = "Sending data to AI...";
-        var response = AiAgent.QueryAgent(textBoxContent);
+        var response = AiAgent.QueryAgent(string.Join("\n", textBoxContent.Select(p => p.Title)));
         aiResponseContent = response;
         aiResponseHtml = new MarkupString(Markdown.ToHtml(aiResponseContent));
     }
+}
+
+public class Product
+{
+    public string Title { get; set; }
+    public string HtmlBody { get; set; }
 }

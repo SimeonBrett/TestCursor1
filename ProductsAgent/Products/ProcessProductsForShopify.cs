@@ -1,4 +1,5 @@
-﻿using RestSharp;
+﻿using Newtonsoft.Json;
+using RestSharp;
 
 namespace Products
 {
@@ -15,6 +16,9 @@ namespace Products
             _client = new RestClient(_baseUrl);
         }
 
+        public ProductList ProductList { get; private set; }
+
+
         public string GetAllProducts()
         {
             try
@@ -30,6 +34,8 @@ namespace Products
                 // Check if the request was successful
                 if (response.IsSuccessful)
                 {
+                    // Deserialize the response content to ProductList
+                    ProductList = JsonConvert.DeserializeObject<ProductList>(response.Content ?? "") ?? new ProductList();
                     return response.Content ?? "";
                 }
                 else
@@ -42,7 +48,5 @@ namespace Products
                 throw new Exception($"Error calling Shopify API: {ex.Message}", ex);
             }
         }
-
-
     }
 }
