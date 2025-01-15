@@ -23,7 +23,7 @@ namespace ProductsAgent.Models
         public string Title { get; set; }
 
         [JsonProperty("body_html")]
-        public string BodyHtml { get; set; }
+        public string HtmlBody { get; set; }
 
         [JsonProperty("vendor")]
         public string Vendor { get; set; }
@@ -48,7 +48,15 @@ namespace ProductsAgent.Models
 
         [JsonProperty("admin_graphql_api_id")]
         public string AdminGraphqlApiId { get; set; }
+
+        [JsonProperty("image")]
+        public Image Image { get; set; }
     }
 
 
+    public class Image
+    {
+        [JsonProperty("src")]
+        public string Src { get; set; }
+    }
 }
