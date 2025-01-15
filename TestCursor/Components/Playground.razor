@@ -1,10 +1,12 @@
-﻿@page "/scrollabletextbox"
+﻿@page "/"
+@page "/scrollabletextbox"
 @using AiAgent
 @using Products
 @rendermode InteractiveServer
 @using Markdig
 @using ProductsAgent.Models
 @using Pages = Entities.Pages.Playground;
+
 
 <h3>Playground</h3>
 
@@ -36,12 +38,21 @@
 
 <h3>Recommendations</h3>
 <div class="form-control" style="height: 600px; overflow-y: auto;">
-    @aiResponseHtml
+    @if (isLoading)
+    {
+        <LoadingState Message="Sending data to AI..." />
+    }
+    else
+    {
+        @aiResponseHtml
+    }
 </div>
 
 <button class="btn btn-secondary" @onclick="SendToAI">Send to AI</button>
 
 @code {
+    private bool isLoading = false;
+
     // Textbox1 variables
     private List<Pages.Product> textBoxContent = new List<Pages.Product>();
     private string shopifyAllProductsResult;
@@ -70,14 +81,19 @@
 
     private async Task SendToAI()
     {
-        aiResponseHtml = (MarkupString)"Sending data to AI...";
-        StateHasChanged(); // Force a UI refresh
+        isLoading = true;
+        StateHasChanged();
 
-        // Add a small delay to ensure UI updates
-        await Task.Delay(1);
-
-        var response = await Task.Run(() => AiAgent.QueryAgent(string.Join("\n", shopifyAllProductsResult)));
-        aiResponseContent = response;
-        aiResponseHtml = new MarkupString(Markdown.ToHtml(aiResponseContent));
+        try
+        {
+            await Task.Delay(1); // Ensure UI updates
+            var response = await Task.Run(() => AiAgent.QueryAgent(string.Join("\n", shopifyAllProductsResult)));
+            aiResponseContent = response;
+            aiResponseHtml = new MarkupString(Markdown.ToHtml(aiResponseContent));
+        }
+        finally
+        {
+            isLoading = false;
+        }
     }
 }

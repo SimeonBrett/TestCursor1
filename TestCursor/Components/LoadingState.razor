@@ -1,0 +1,32 @@
+﻿@* LoadingState.razor *@
+<style>
+    @@keyframes progressBar {
+        0% {
+            width: 0%;
+        }
+
+        50% {
+            width: 100%;
+        }
+
+        100% {
+            width: 0%;
+        }
+    }
+
+    .progress-bar-animate {
+        animation: progressBar 2s ease-in-out infinite;
+    }
+</style>
+
+<div class="text-center p-3">
+    <div class="progress mb-3" style="height: 5px;">
+        <div class="progress-bar progress-bar-animate" role="progressbar" style="width: 0%"></div>
+    </div>
+    <p>@Message</p>
+</div>
+
+@code {
+    [Parameter]
+    public string Message { get; set; } = "Loading...";
+}
