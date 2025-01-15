@@ -4,6 +4,7 @@
 @rendermode InteractiveServer
 @using Markdig
 @using ProductsAgent.Models
+@using Pages = Entities.Pages.Playground;
 
 <h3>Playground</h3>
 
@@ -14,6 +15,7 @@
 <table class="table">
     <thead>
         <tr>
+            <th>Image</th>
             <th>Title</th>
             <th>Description</th>
         </tr>
@@ -22,31 +24,28 @@
         @foreach (var product in textBoxContent)
         {
             <tr>
+                <td><img src="@product.Image" alt="@product.Title" style="max-width: 100px; max-height: 100px;" /></td>
                 <td>@product.Title</td>
-                <td>@(new MarkupString(Markdown.ToPlainText(product.BodyHtml)))</td>
+                <td>@(new MarkupString(Markdown.ToPlainText(product.HtmlBody)))</td>
             </tr>
         }
     </tbody>
 </table>
 
-
 <button class="btn btn-primary" @onclick="GetAllProducts">Get All Products</button>
-
-
-
 
 <h3>Recommendations</h3>
 <div class="form-control" style="height: 800px; overflow-y: auto;">
     @aiResponseHtml
 </div>
 
-
 <button class="btn btn-secondary" @onclick="SendToAI">Send to AI</button>
 
 @code {
-    private List<Product> textBoxContent = new List<Product>();
+    private List<Pages.Product> textBoxContent = new List<Pages.Product>();
     private string aiResponseContent = "No AI Response Yet";
     private MarkupString aiResponseHtml;
+    private string shopifyAllProductsResult;
 
     [Inject]
     private IProcessProducts ProcessProducts { get; set; }
@@ -56,22 +55,21 @@
 
     private async Task GetAllProducts()
     {
-        textBoxContent = new List<Product> { new Product { Title = "Fetching all products...", BodyHtml = "" } };
-        var products = ProcessProducts.GetAllProducts();
-        textBoxContent = ProcessProducts.ProductList.Products.Select(p => new Product { Title = p.Title, BodyHtml = p.BodyHtml }).ToList();
+        textBoxContent = new List<Pages.Product> { new Pages.Product { Title = "Fetching all products...", HtmlBody = "" } };
+        shopifyAllProductsResult = ProcessProducts.GetAllProducts();
+        foreach (var p in ProcessProducts.ProductList.Products)
+        {
+            var contentLine = new Pages.Product{Image = p.Image.Src,Title = p.Title, HtmlBody = p.HtmlBody};
+            textBoxContent.Add(contentLine);
+        }
     }
 
     private async Task SendToAI()
     {
         aiResponseContent = "Sending data to AI...";
-        var response = AiAgent.QueryAgent(string.Join("\n", textBoxContent.Select(p => p.Title)));
+        var response = AiAgent.QueryAgent(string.Join("\n", shopifyAllProductsResult));
         aiResponseContent = response;
         aiResponseHtml = new MarkupString(Markdown.ToHtml(aiResponseContent));
     }
 }
 
-public class Product
-{
-    public string Title { get; set; }
-    public string HtmlBody { get; set; }
-}
