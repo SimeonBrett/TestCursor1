@@ -23,16 +23,24 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var product in textBoxContent)
+        @foreach (var product in textBoxContent.Select((product, index) => new { product, index }))
         {
-            <tr>
-                <td><img src="@product.Image" alt="@product.Title" style="max-width: 100px; max-height: 100px;" /></td>
-                <td>@product.Title</td>
-                <td>@(new MarkupString(Markdown.ToPlainText(product.HtmlBody)))</td>
+            <tr @onclick="() => OnRowClick(product.index)">
+                <td><img src="@product.product.Image" alt="@product.product.Title" style="max-width: 100px; max-height: 100px;" /></td>
+                <td>@product.product.Title</td>
+                <td>@(new MarkupString(Markdown.ToPlainText(product.product.HtmlBody)))</td>
             </tr>
         }
     </tbody>
 </table>
+
+@code {
+    private void OnRowClick(int rowIndex)
+    {
+        // Handle row click event here
+        Console.WriteLine($"Row {rowIndex} clicked");
+    }
+}
 
 <button class="btn btn-primary" @onclick="GetAllProducts">Get All Products</button>
 
