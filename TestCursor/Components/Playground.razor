@@ -37,7 +37,7 @@
 @code {
     private void OnRowClick(int rowIndex)
     {
-        // Handle row click event here
+        selectedRowIndex = rowIndex;
         Console.WriteLine($"Row {rowIndex} clicked");
     }
 }
@@ -45,15 +45,25 @@
 <button class="btn btn-primary" @onclick="GetAllProducts">Get All Products</button>
 
 <h3>Recommendations</h3>
-<div class="form-control" style="height: 600px; overflow-y: auto;">
-    @if (isLoading)
-    {
-        <LoadingState Message="Sending data to AI..." />
-    }
-    else
-    {
-        @aiResponseHtml
-    }
+<div class="row">
+    <div class="col-md-8">
+        <div class="form-control" style="height: 600px; overflow-y: auto;">
+            @if (isLoading)
+            {
+                <LoadingState Message="Sending data to AI..." />
+            }
+            else
+            {
+                @aiResponseHtml
+            }
+        </div>
+    </div>
+    <div class="col-md-4">
+        <!-- Another control to the right -->
+        <div class="form-control" style="height: 600px; overflow-y: auto;">
+            <input type="text" class="form-control" value="@selectedRowIndex" readonly />
+        </div>
+    </div>
 </div>
 
 <button class="btn btn-secondary" @onclick="SendToAI">Send to AI</button>
@@ -68,7 +78,7 @@
     //Textbox2 variables
     private string aiResponseContent = string.Empty;
     private MarkupString aiResponseHtml = new MarkupString("No AI Response Yet");
-
+    private int selectedRowIndex;
 
     [Inject]
     private IProcessProducts ProcessProducts { get; set; }
