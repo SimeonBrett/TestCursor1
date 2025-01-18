@@ -7,11 +7,11 @@
 @using ProductsAgent.Models
 @using Pages = Entities.Pages.Playground;
 
-
 <h3>Playground</h3>
 
 <PageTitle>Scrollable TextBox</PageTitle>
 
+<!-- Products TextBox Section -->
 <h3>Products</h3>
 
 <table class="table">
@@ -38,19 +38,22 @@
     private void OnRowClick(int rowIndex)
     {
         selectedRowIndex = rowIndex;
-        Console.WriteLine($"Row {rowIndex} clicked");
+        selectedProductId = textBoxContent[rowIndex].Id;
+        Console.WriteLine($"Row with Product ID {selectedProductId} clicked");
     }
 }
 
+<!-- GetAllProducts Button Section -->
 <button class="btn btn-primary" @onclick="GetAllProducts">Get All Products</button>
 
+<!-- Recommendations TextBox Section -->
 <h3>Recommendations</h3>
 <div class="row">
     <div class="col-md-8">
         <div class="form-control" style="height: 600px; overflow-y: auto;">
             @if (isLoading)
             {
-                <LoadingState Message="Sending data to AI..." />
+                <LoadingState Message="Analyzing..." />
             }
             else
             {
@@ -58,45 +61,38 @@
             }
         </div>
     </div>
+    <!-- Another control to the right -->
     <div class="col-md-4">
-        <!-- Another control to the right -->
         <div class="form-control" style="height: 600px; overflow-y: auto;">
-            <input type="text" class="form-control" value="@selectedRowIndex" readonly />
+            <input type="text" class="form-control" value="Row @selectedRowIndex - Id @selectedProductId selected" readonly />
+            @if (selectedRowIndex >= 0 && selectedRowIndex < textBoxContent.Count)
+            {
+                <img src="@textBoxContent[selectedRowIndex].Image" alt="@textBoxContent[selectedRowIndex].Title" style="max-width: 100%; max-height: 100%;" />
+            }
+        </div>
+        <button class="btn btn-info mt-2" @onclick="() => GetDetailedSuggestions(selectedProductId)">Details</button>
+
+        @code {
+            private async Task GetDetailedSuggestions(long productId)
+            {
+                if (selectedRowIndex >= 0 && selectedRowIndex <= textBoxContent.Count)
+                {
+                    var selectedProduct = textBoxContent[selectedRowIndex];
+                    var detailedSuggestions = await Task.Run(() => AiAgent.GetDetailedRecommendation(productId, shopifyAllProductsResult));
+                    aiResponseContent2 = detailedSuggestions;
+                    aiResponseHtml2 = new MarkupString(Markdown.ToHtml(aiResponseContent2));
+                }
+            }
+        }
+        <div class="form-control mt-2" style="height: 600px; overflow-y: auto;">
+            @aiResponseHtml2
         </div>
     </div>
 </div>
-
-<button class="btn btn-secondary" @onclick="SendToAI">Send to AI</button>
+<!-- Analyze Button Section -->
+<button class="btn btn-secondary" @onclick="SendToAI">Analyze</button>
 
 @code {
-    private bool isLoading = false;
-
-    // Textbox1 variables
-    private List<Pages.Product> textBoxContent = new List<Pages.Product>();
-    private string shopifyAllProductsResult;
-
-    //Textbox2 variables
-    private string aiResponseContent = string.Empty;
-    private MarkupString aiResponseHtml = new MarkupString("No AI Response Yet");
-    private int selectedRowIndex;
-
-    [Inject]
-    private IProcessProducts ProcessProducts { get; set; }
-
-    [Inject]
-    private IAiAgent AiAgent { get; set; }
-
-    private async Task GetAllProducts()
-    {
-        textBoxContent = new List<Pages.Product> { new Pages.Product { Title = "Fetching all products...", HtmlBody = "" } };
-        shopifyAllProductsResult = ProcessProducts.GetAllProducts();
-        foreach (var p in ProcessProducts.ProductList.Products)
-        {
-            var contentLine = new Pages.Product{Image = p.Image.Src,Title = p.Title, HtmlBody = p.HtmlBody};
-            textBoxContent.Add(contentLine);
-        }
-    }
-
     private async Task SendToAI()
     {
         isLoading = true;
@@ -112,6 +108,42 @@
         finally
         {
             isLoading = false;
+        }
+    }
+}
+
+@code {
+    private bool isLoading = false;
+
+    // Textbox1 variables
+    private List<Pages.Product> textBoxContent = new List<Pages.Product>();
+    private string shopifyAllProductsResult;
+
+    // Textbox2 variables
+    private string aiResponseContent = string.Empty;
+    private MarkupString aiResponseHtml = new MarkupString("No AI Response Yet");
+    private int selectedRowIndex;
+    private long selectedProductId;
+
+
+    private string aiResponseContent2 = string.Empty;
+    private MarkupString aiResponseHtml2 = new MarkupString();
+
+
+    [Inject]
+    private IProcessProducts ProcessProducts { get; set; }
+
+    [Inject]
+    private IAiAgent AiAgent { get; set; }
+
+    private async Task GetAllProducts()
+    {
+        textBoxContent = new List<Pages.Product> { new Pages.Product { Title = "Fetching all products...", HtmlBody = "" } };
+        shopifyAllProductsResult = ProcessProducts.GetAllProducts();
+        foreach (var p in ProcessProducts.ProductList.Products)
+        {
+            var contentLine = new Pages.Product{Id = p.Id, Image = p.Image.Src,Title = p.Title, HtmlBody = p.HtmlBody};
+            textBoxContent.Add(contentLine);
         }
     }
 }

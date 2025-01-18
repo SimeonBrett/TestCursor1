@@ -1,4 +1,6 @@
-﻿namespace AiAgent;
+﻿using Newtonsoft.Json;
+
+namespace AiAgent;
 
 
 using RestSharp;
@@ -22,6 +24,43 @@ public class OpenAiClient : IAiAgent
     private readonly RestClient _client;
     private readonly string _apiKey;
 
+
+    private readonly string _generalPrompt1 =
+        $"I own a Shopify webset." +
+        $"You are a helpful marketing and SEO expert how responds in a professional but friendly tone." +
+        $"Please analyse my products and give me advice on them.  This advice should be general.  " +
+        $"Do not recommend specific changes to a product, except to use as an example of changes that might be made.  " +
+        $"Provide approximately 10 suggestions, but you may provide more or fewer as appropriate." +
+        $"For each recommendation, provide:  " +
+        $" - a title (in bold)." +
+        $" - an observation" +
+        $" - a recommendation for improvement" +
+        $"Do not end with a sentence inviting more questions." +
+        $"My goals:" +
+        $"- To attract additional custom    ers" +
+        $"- to make the website more engaging" +
+        $"- to attract and retain customers" +
+        $"" +
+        $"Here are my products:";
+
+    private readonly string _detailedPrompt1 =
+        $"I own a Shopify webset." +
+        $"You are a helpful marketing and SEO expert how responds in a professional but friendly tone." +
+        $"Please analyse my website entry for this invidual product.  I'm looking for detailed advice on how to change the description, title, price and image(s).  " +
+        $"I'm also looking for SEO advice on how to get more sales." +
+        $"" +
+        $"Do not make introductory or final remarks in the response.  Only give the recommendations." +
+        $"For each recommendation, provide:" +
+        $" - the current value" +
+        $" - the recommended value" +
+        $" - an observation or a rationale for the recommendation" +
+        $"" +
+        $"Do not use html tags in the recommendations.  Instead use markdown where appropriate." +
+        $"" +
+        $"Here is the product:";
+
+    private string productListClass = string.Empty;
+
     public OpenAiClient(string apiKey)
     {
         _apiKey = apiKey;
@@ -33,8 +72,11 @@ public class OpenAiClient : IAiAgent
         _client = new RestClient(options);
     }
 
-    public string QueryAgent(string prompt)
+    public string QueryAgent(string products)
     {
+        if (this.productListClass != products)
+            this.productListClass = products;
+
         var request = new RestRequest("/chat/completions", Method.Post);
 
         var requestBody = new OpenAiRequest
@@ -46,8 +88,56 @@ public class OpenAiClient : IAiAgent
                 new Message
                 {
                     role = "user",
-                    content = $"I own a store at Shopify.  These are my products.  Please suggest improvements:" +
-                              $"{prompt}"
+                    content = $"{_generalPrompt1}" +
+                              $"{products}"
+                }
+            }
+        };
+
+        request.AddHeader("Authorization", $"Bearer {_apiKey}");
+        request.AddHeader("Content-Type", "application/json");
+        request.AddJsonBody(requestBody);
+
+        try
+        {
+            var response = _client.Execute(request);
+
+            if (response.IsSuccessful)
+            {
+                return ExtractContent(response.Content ?? "{}");
+
+            }
+
+            throw new Exception($"API call failed: {response.ErrorMessage}");
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Error making OpenAI API call: {ex.Message}", ex);
+        }
+    }
+
+    public string GetDetailedRecommendation(long productId, string products)
+    {
+        if (this.productListClass != products)
+            this.productListClass = products;
+
+        var productList = JsonConvert.DeserializeObject<ProductList>(products);
+        var product = productList?.Products?.FirstOrDefault(x => x.Id == productId);
+        var productJSon = JsonConvert.SerializeObject(product);
+
+        var request = new RestRequest("/chat/completions", Method.Post);
+
+        var requestBody = new OpenAiRequest
+        {
+            model = "gpt-4o-mini",
+            store = true,
+            messages = new Message[]
+            {
+                new Message
+                {
+                    role = "user",
+                    content = $"{_detailedPrompt1}" +
+                              $"{productJSon}"
                 }
             }
         };
