@@ -3,8 +3,8 @@
     public class Product
     {
         public long Id { get; set; }
-        public string Title { get; set; }
-        public string HtmlBody { get; set; }
-        public string Image { get; set; }
+        public string Title { get; set; } = string.Empty;
+        public string BodyHtml { get; set; } = string.Empty;
+        public string? Image { get; set; }
     }
 }

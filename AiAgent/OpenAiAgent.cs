@@ -43,20 +43,33 @@ public class OpenAiClient : IAiAgent
         $"" +
         $"Here are my products:";
 
+
     private readonly string _detailedPrompt1 =
-        $"I own a Shopify webset." +
+        $"I own a Shopify website." +
         $"You are a helpful marketing and SEO expert how responds in a professional but friendly tone." +
         $"Please analyse my website entry for this invidual product.  I'm looking for detailed advice on how to change the description, title, price and image(s).  " +
         $"I'm also looking for SEO advice on how to get more sales." +
         $"" +
+        $"You will be providing the response in two parts:" +
+        $"" +
+        $"Part 1:" +
         $"Do not make introductory or final remarks in the response.  Only give the recommendations." +
         $"For each recommendation, provide:" +
         $" - the current value" +
         $" - the recommended value" +
         $" - an observation or a rationale for the recommendation" +
         $"" +
-        $"Do not use html tags in the recommendations.  Instead use markdown where appropriate." +
+        $"Do not use html tags in the recommendations, except for links.  Instead use markdown where appropriate." +
+        $"The text in Part 1 should be fully formated, and sections bolded where appropriate.  Different sections should be separated by a blank line." +
+        $"When referring to an external file, create a link to the file.  In Part 1, escape any quotes (\").." +
         $"" +
+        $"" +
+        $"Part 2:" +
+        $"Part2 will be a structured json product will the same format as the input." +
+        $"Do not include attributes that are not changed.  Do not make suggestions in part 2; provide only the recommended values as these will be posted to the website." +
+        $"" +
+        $"The entire response should be structured as a json object with the following structure:" +
+        "{\"Part1\":\"<Part1 response>\", \"Part2\" : \"<Part2 response>\"}" +
         $"Here is the product:";
 
     private string productListClass = string.Empty;

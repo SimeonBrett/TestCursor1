@@ -1,10 +1,10 @@
 ﻿@page "/"
 @page "/scrollabletextbox"
+@using System.Text.Json
 @using AiAgent
 @using Products
 @rendermode InteractiveServer
 @using Markdig
-@using ProductsAgent.Models
 @using Pages = Entities.Pages.Playground;
 
 <h3>Playground</h3>
@@ -28,7 +28,7 @@
             <tr @onclick="() => OnRowClick(product.index)">
                 <td><img src="@product.product.Image" alt="@product.product.Title" style="max-width: 100px; max-height: 100px;" /></td>
                 <td>@product.product.Title</td>
-                <td>@(new MarkupString(Markdown.ToPlainText(product.product.HtmlBody)))</td>
+                <td>@(new MarkupString(Markdown.ToPlainText(product.product.BodyHtml)))</td>
             </tr>
         }
     </tbody>
@@ -79,7 +79,16 @@
                 {
                     var selectedProduct = textBoxContent[selectedRowIndex];
                     var detailedSuggestions = await Task.Run(() => AiAgent.GetDetailedRecommendation(productId, shopifyAllProductsResult));
-                    aiResponseContent2 = detailedSuggestions;
+                    string detailedSuggestrionsPart1 = string.Empty;
+                    string detailedSuggestrionsPart2 = string.Empty;
+                    using (JsonDocument doc = JsonDocument.Parse(detailedSuggestions))
+                    {
+                        JsonElement root = doc.RootElement;
+                        detailedSuggestrionsPart1 = root.GetProperty("Part1").GetString();
+                        detailedSuggestrionsPart2 = root.GetProperty("Part2").GetString();
+                    }
+
+                    aiResponseContent2 = detailedSuggestrionsPart1;
                     aiResponseHtml2 = new MarkupString(Markdown.ToHtml(aiResponseContent2));
                 }
             }
@@ -138,11 +147,11 @@
 
     private async Task GetAllProducts()
     {
-        textBoxContent = new List<Pages.Product> { new Pages.Product { Title = "Fetching all products...", HtmlBody = "" } };
+        textBoxContent = new List<Pages.Product> { new Pages.Product { Title = "Fetching all products...", BodyHtml = "" } };
         shopifyAllProductsResult = ProcessProducts.GetAllProducts();
         foreach (var p in ProcessProducts.ProductList.Products)
         {
-            var contentLine = new Pages.Product{Id = p.Id, Image = p.Image.Src,Title = p.Title, HtmlBody = p.HtmlBody};
+            var contentLine = new Pages.Product { Id = p.Id, Image = p.Image?.Src, Title = p.Title, BodyHtml = p.BodyHtml };
             textBoxContent.Add(contentLine);
         }
     }
